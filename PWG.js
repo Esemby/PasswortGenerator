@@ -18,27 +18,35 @@ function GeneratePassword(pw_lenght,type)
 				RNG = Math.random()* (126-33)+33;//Rinse and repeate
 				RNG = Math.floor(RNG);
 			}		
-		
 		}
+		
 		if(type == "HEXDEC")//Hexadecimal
 		{
 			while(!characterHEXDECWhitelist.includes(RNG))
 			{
 				RNG = Math.random()* (126-33)+33;//Rinse and repeate
-				RNG = Math.floor(RNG);				
+				RNG = Math.floor(RNG);
 			}
 		}
-		
 		result += String.fromCharCode(RNG);//Convert Int to ASCII
 	}
 	return result;
 }
-
 //main
+//httpMock.add('/api/tournament', __dirname + '/mocks/api_tournament.json');
 //httpMock.add('Path',function(head,data){DO STUFF HERE AND RETURN});
-httpMock.add('/api/V1.0',function(_,data){
-	return data;
+//Abfrage durch localhost:3333/Path
+httpMock.add('/api/V0.1',function(head,data){//Default response/fast request
+	if(data != null)
+	{
+		console.log(data);
+	}
+	return GeneratePassword(12,"NoType");
+});
+/*
+httpMock.add('/api/V0.1',function(_,data){//Default response/fast request
+	return GeneratePassword(12,"NoType");
 });
 //var data = [64,"HEXDEC"];
 //console.log(GeneratePassword(data[0],data[1]));
-
+*/
