@@ -9,8 +9,7 @@ function GeneratePassword(pw_lenght,type)
 	for(var x = 0; x < pw_lenght;x++)
 	{
 		var RNG = Math.random()* (127-33)+33;//all characters till 32 (Space) are operators and must be ignored;
-		RNG = Math.floor(RNG);
-		
+		RNG = Math.floor(RNG);		
 		if(type == "NoType")//No Type
 		{
 			while(characterGeneralBlacklist.includes(RNG))//Genarl unaccaptable ASCII in PW
