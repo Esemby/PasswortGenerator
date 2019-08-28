@@ -1,0 +1,41 @@
+<html>
+<head>
+</head>
+<body>
+<h1 id="demo"> none recived yet </h1>
+	<script>
+	var payload = //JSON OBJECT
+	{
+		lenght: 69,
+		type: "HEXDEC"
+	};//JSON OBJECT END
+
+	var data = new FormData();//IDK
+	data.append( "json", JSON.stringify(payload))//JSON.stringify( payload ) );
+
+	fetch
+	(
+		"localhost:3333/api/v0.1/NonDefault",//FETCH ADRESSE
+		{
+			method: "POST",
+			body: data
+		}
+	)
+	.then
+	(
+		function(res)
+		{ 
+			return res.json(); 
+		}
+	)
+	.then
+	(
+		function(data)
+		{ 
+			document.getElementById("demo").innerHTML = data; 
+			alert( JSON.stringify( data ) );
+		}
+	)
+	</script>
+</body>
+</html>

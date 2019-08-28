@@ -9,7 +9,7 @@ function GeneratePassword(pw_lenght,type)
 	for(var x = 0; x < pw_lenght;x++)
 	{
 		var RNG = Math.random()* (127-33)+33;//all characters till 32 (Space) are operators and must be ignored;
-		RNG = Math.floor(RNG);		
+		RNG = Math.floor(RNG);
 		if(type == "NoType")//No Type
 		{
 			while(characterGeneralBlacklist.includes(RNG))//Genarl unaccaptable ASCII in PW
@@ -35,13 +35,29 @@ function GeneratePassword(pw_lenght,type)
 //httpMock.add('/api/tournament', __dirname + '/mocks/api_tournament.json');
 //httpMock.add('Path',function(head,data){DO STUFF HERE AND RETURN});
 //Abfrage durch localhost:3333/Path
-httpMock.add('/api/V0.1',function(head,data){//Default response/fast request
-	if(data != null)
-	{
-		console.log(data);
-	}
-	return GeneratePassword(12,"NoType");
+httpMock.add('/api/V0.1',function(head,data)
+{//Default response/fast request
+		return GeneratePassword(12,"NoType");
 });
+
+httpMock.add('/api/V0.1/NonDefault',function(head,data)//Mit payload (heavy BETA) kann ignoriert werden
+{
+	try
+	{
+		return GeneratePassword(data.length,data.type);//Wenn JSON empfangen
+	}
+	catch
+	{
+		var obj_data = JSON.parse(data);//wenn JSON.stringify angwewendet wurde
+		return GeneratePassword(obj_data.length,data.type);
+	}
+	final
+	{
+		return "Payload Format Error";		
+	}
+});
+
+
 /*
 httpMock.add('/api/V0.1',function(_,data){//Default response/fast request
 	return GeneratePassword(12,"NoType");
