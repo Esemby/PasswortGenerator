@@ -65,7 +65,6 @@ function GeneratePassword(pw_lenght,type)
 //httpMock.add('/api/tournament', __dirname + '/mocks/api_tournament.json');
 //httpMock.add('Path',function(head,data){DO STUFF HERE AND RETURN});
 //Abfrage durch localhost:3333/Path
-console.log(characterAlphaNumWhitelist);
 
 httpMock.add('/api/V0.1',function(head,data)
 {//Default response/fast request
