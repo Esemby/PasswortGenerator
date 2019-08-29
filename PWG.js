@@ -2,7 +2,28 @@
 const httpMock = require('@Zemke/http-mock')(3333);//Florians Mock HTTP
 const characterGeneralBlacklist = [34,39,44,47,58,59,64,92,94,96,123,124,125,127];
 const characterHEXDECWhitelist = [48,49,50,51,52,53,54,55,56,57,65,66,67,68,69,70];
+const characterAlphaNumWhitelist = GetAlphaNumWhitelist();
+
 //functions
+function GetAlphaNumWhitelist()
+{
+	var AlphaNumWhitelist = [];
+	
+	for(var x = 48; x <= 57;x++)
+	{
+		AlphaNumWhitelist.push(x);
+	}
+	for(var x = 65; x <= 90;x++)
+	{
+		AlphaNumWhitelist.push(x);
+	}
+	for(var x = 97; x <= 122;x++)
+	{
+		AlphaNumWhitelist.push(x);
+	}
+	return AlphaNumWhitelist;
+}
+
 function GeneratePassword(pw_lenght,type)
 {
 	var result = "";
@@ -27,6 +48,15 @@ function GeneratePassword(pw_lenght,type)
 				RNG = Math.floor(RNG);
 			}
 		}
+		
+		if(type == "AlphaNum")//Hexadecimal
+		{
+			while(!characterAlphaNumWhitelist.includes(RNG))
+			{
+				RNG = Math.random()* (126-33)+33;//Rinse and repeate
+				RNG = Math.floor(RNG);
+			}
+		}
 		result += String.fromCharCode(RNG);//Convert Int to ASCII
 	}
 	return result;
@@ -35,6 +65,8 @@ function GeneratePassword(pw_lenght,type)
 //httpMock.add('/api/tournament', __dirname + '/mocks/api_tournament.json');
 //httpMock.add('Path',function(head,data){DO STUFF HERE AND RETURN});
 //Abfrage durch localhost:3333/Path
+console.log(characterAlphaNumWhitelist);
+
 httpMock.add('/api/V0.1',function(head,data)
 {//Default response/fast request
 		return GeneratePassword(12,"NoType");
